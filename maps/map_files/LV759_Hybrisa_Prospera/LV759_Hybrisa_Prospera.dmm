@@ -8411,7 +8411,7 @@
 	opened = 1
 	},
 /obj/item/storage/bag/plasticbag,
-/obj/item/trash/liquidfood,
+/obj/item/trash/buritto,
 /obj/item/hybrisa/misc/trash_bag_full_prop{
 	pixel_x = -3;
 	pixel_y = 6
@@ -34041,7 +34041,7 @@
 	buckling_x = 7;
 	buckling_y = 7
 	},
-/obj/item/prop/helmetgarb/gunoil,
+/obj/item/stack/repairable/gunlube,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
@@ -38896,7 +38896,7 @@
 	layer = 2.9
 	},
 /obj/item/ammo_box/magazine/type19/empty,
-/obj/item/prop/helmetgarb/gunoil{
+/obj/item/stack/repairable/gunlube{
 	pixel_x = 14;
 	pixel_y = 2
 	},
@@ -53452,7 +53452,7 @@
 /turf/open/floor/plating/plating_catwalk/aicore/white,
 /area/lv759/indoors/colonial_marshals/prisoners_recreation_area)
 "hnu" = (
-/obj/item/storage/backpack/commando{
+/obj/item/storage/backpack/pmc/backpack/commando/apesuit{
 	layer = 5
 	},
 /obj/structure/closet/crate/secure/weyland{
@@ -54392,7 +54392,7 @@
 /turf/open/floor/corsat/spiralplate,
 /area/lv759/indoors/wy_research_complex/xenobiology)
 "huf" = (
-/obj/item/trash/liquidfood,
+/obj/item/trash/buritto,
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
@@ -59962,7 +59962,7 @@
 /area/lv759/indoors/caves/west_caves)
 "ikF" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/trash/pistachios,
+/obj/item/trash/sosjerky,
 /obj/item/trash/cigbutt{
 	pixel_x = -1;
 	pixel_y = 17
@@ -67384,7 +67384,7 @@
 /turf/open/floor/prison/whitegreenfull,
 /area/lv759/indoors/hospital/central_hallway)
 "joK" = (
-/obj/item/trash/pistachios{
+/obj/item/trash/cheesie{
 	pixel_x = 6;
 	pixel_y = 26
 	},
@@ -67650,7 +67650,7 @@
 /obj/structure/machinery/conveyor{
 	id = "anomalybelt"
 	},
-/obj/item/trash/liquidfood,
+/obj/item/trash/burger,
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/hybrisa/dirt,
 /obj/item/trash/crushed_cup,
@@ -68387,7 +68387,7 @@
 /area/lv759/indoors/mining_outpost/vehicledeployment)
 "jwH" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/prop/helmetgarb/gunoil,
+/obj/item/stack/repairable/gunlube,
 /obj/effect/landmark/item_pool_spawner/survivor_ammo/buckshot,
 /obj/structure/surface/rack{
 	color = "#8B7B5B"
@@ -73653,7 +73653,7 @@
 /turf/open/floor/hybrisa/tile/tilewhite,
 /area/lv759/indoors/south_public_restroom)
 "kmz" = (
-/obj/item/clothing/gloves/marine/veteran/pmc/commando,
+/obj/item/clothing/gloves/marine/veteran/pmc/apesuit,
 /obj/structure/cable/white{
 	color = "9f8700";
 	icon_state = "8-9";
@@ -100143,7 +100143,7 @@
 	pixel_y = 30
 	},
 /obj/structure/bed/chair/comfy/hybrisa/red,
-/obj/item/storage/belt/gun/m4a3/mod88,
+/obj/item/storage/belt/gun/m4a3/wy/mod88,
 /obj/effect/spawner/random/technology_scanner,
 /turf/open/floor/hybrisa/wood/blackwood,
 /area/lv759/indoors/weyyu_office/supervisor)
@@ -121899,7 +121899,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/trash/liquidfood,
+/obj/item/trash/buritto,
 /obj/item/trash/cigbutt{
 	pixel_x = -10;
 	pixel_y = 14
@@ -140076,7 +140076,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/trash/liquidfood,
+/obj/item/trash/burger,
 /obj/item/trash/cigbutt{
 	pixel_x = -10;
 	pixel_y = 14
@@ -152542,7 +152542,7 @@
 /obj/structure/surface/table/reinforced/almayer_B,
 /obj/structure/closet/walllocker,
 /obj/item/device/encryptionkey/commando,
-/obj/item/clothing/head/helmet/marine/veteran/pmc/gunner,
+/obj/item/clothing/head/helmet/marine/veteran/pmc/enclosed,
 /obj/effect/spawner/random/technology_scanner,
 /turf/open/floor/almayer/plate,
 /area/lv759/indoors/wy_research_complex/hangarbayshuttle)
@@ -163496,7 +163496,7 @@
 	opened = 1
 	},
 /obj/item/trash/used_stasis_bag,
-/obj/item/trash/liquidfood,
+/obj/item/trash/popcorn,
 /turf/open/floor/prison/floor_plate/southwest,
 /area/lv759/outdoors/colony_streets/east_central_street)
 "xwh" = (
