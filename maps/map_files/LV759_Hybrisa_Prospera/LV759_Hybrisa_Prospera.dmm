@@ -11067,7 +11067,7 @@
 /area/lv759/indoors/caves/east_caves)
 "baj" = (
 /obj/structure/closet,
-/obj/item/storage/backpack/lightpack,
+/obj/item/storage/backpack/pmc,
 /obj/structure/machinery/light/double,
 /turf/open/floor/almayer/plate,
 /area/lv759/indoors/wy_research_complex/dormsfoyer)
@@ -23193,7 +23193,7 @@
 /obj/item/clothing/under/marine/veteran/pmc/corporate/hybrisa/lead{
 	pixel_y = 4
 	},
-/obj/item/storage/backpack/lightpack{
+/obj/item/storage/backpack/pmc{
 	pixel_x = -3;
 	pixel_y = 12
 	},
@@ -95366,14 +95366,14 @@
 /obj/structure/surface/table{
 	color = "#8B7B5B"
 	},
-/obj/item/storage/backpack/lightpack{
+/obj/item/storage/backpack/lightpack/five_slot{
 	pixel_y = 8;
 	layer = 2.8
 	},
-/obj/item/storage/backpack/lightpack{
+/obj/item/storage/backpack/lightpack/five_slot{
 	layer = 2.9
 	},
-/obj/item/storage/backpack/lightpack{
+/obj/item/storage/backpack/lightpack/five_slot{
 	pixel_y = -8
 	},
 /turf/open/floor/hybrisa/carpet/carpetgreendeco,
