@@ -177,11 +177,13 @@
 
 
 		REMOVE_TRAIT(targets, TRAIT_IMMOBILIZED, TRAIT_SOURCE_ABILITY("Abduct"))
+		abduct_user.throw_carbon(targets, get_dir(targets, throw_turf), 3, SPEED_VERY_FAST, immobilize = FALSE)
+
+
 
 		targets_added -= targets
 
 	ability_used_once = FALSE
-	abduct_user.throw_carbon(targets_added, get_dir(targets_added, throw_turf), 3, SPEED_VERY_FAST, immobilize = FALSE)
 	abduct_user.emote("roar")
 	qdel(tail_beam)
 	apply_cooldown()
