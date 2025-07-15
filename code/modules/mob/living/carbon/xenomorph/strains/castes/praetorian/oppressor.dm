@@ -163,11 +163,13 @@
 
 		var/list/collision_callbacks = list(/mob/living/carbon/human = CALLBACK(src, PROC_REF(throw_targets)))
 		abduct_user.throw_carbon(targets, get_dir(targets, throw_turf), 3, SPEED_VERY_FAST, immobilize = FALSE, collision_callbacks = collision_callbacks)
+		if(collision_callbacks)
+			targets.Stun(1)
+			targets.KnockDown(1)
 
 /datum/action/xeno_action/activable/prae_abduct/proc/throw_targets()
 	var/mob/living/carbon/xenomorph/abduct_user = owner
 	var/turf/thrown_turf = get_turf(throw_turf)
-	var/hit_obstacle = FALSE
 	var/mob/living/carbon/target_turf_mob = locate() in thrown_turf
 	var/sound = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg',)
 
@@ -178,12 +180,8 @@
 		targets_added += target_turf_mob
 
 	for(var/mob/living/targets in targets_added)
-		if(target_turf_mob)
-			targets.Stun(1)
-			targets.KnockDown(1)
-		else
-			targets.Stun(0.7)
-			targets.KnockDown(0.7)
+		targets.Stun(0.7)
+		targets.KnockDown(0.7)
 
 		targets_added -= targets
 
