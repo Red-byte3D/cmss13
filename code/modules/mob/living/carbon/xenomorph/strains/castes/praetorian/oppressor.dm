@@ -152,8 +152,6 @@
 	else
 		initial_throw()
 		apply_cooldown()
-
-
 		return TRUE
 
 
