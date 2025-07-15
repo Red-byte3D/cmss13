@@ -148,20 +148,29 @@
 
 		addtimer(CALLBACK(src, PROC_REF(reset_ability)), 2 SECONDS)
 
-
 		return ..()
 	else
-		throw_targets()
+		initial_throw()
 
 
 		return TRUE
 
+
+
+
+/datum/action/xeno_action/activable/prae_abduct/proc/initial_throw()
+	var/mob/living/carbon/xenomorph/abduct_user = owner
+	for(var/mob/living/targets in targets_added)
+
+		var/list/collision_callbacks = list(/mob/living/carbon/human = CALLBACK(src, PROC_REF(throw_targets)))
+		abduct_user.throw_carbon(targets, get_dir(targets, throw_turf), 3, SPEED_VERY_FAST, immobilize = FALSE, collision_callbacks = collision_callbacks)
 
 /datum/action/xeno_action/activable/prae_abduct/proc/throw_targets()
 	var/mob/living/carbon/xenomorph/abduct_user = owner
 	var/turf/thrown_turf = get_turf(throw_turf)
 	var/hit_obstacle = FALSE
 	var/mob/living/carbon/target_turf_mob = locate() in thrown_turf
+	var/sound = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg',)
 
 	if(target_turf_mob || !get_dist(target_turf_mob, targets_added) > 3)
 		hit_obstacle = TRUE
@@ -177,11 +186,7 @@
 
 
 		REMOVE_TRAIT(targets, TRAIT_IMMOBILIZED, TRAIT_SOURCE_ABILITY("Abduct"))
-		abduct_user.throw_carbon(targets, get_dir(targets, throw_turf), 3, SPEED_VERY_FAST, immobilize = FALSE)
-
-
-
-		targets_added -= targets
+		playsound(targets, sound, 50, 1)
 
 	ability_used_once = FALSE
 	abduct_user.emote("roar")
@@ -330,6 +335,7 @@
 			animate(0.3 SECONDS, pixel_y = old_pixel_y, pixel_x = old_pixel_x)
 
 	addtimer(CALLBACK(src, PROC_REF(end_fling), target_living, old_layer, old_pixel_x, old_pixel_y), 0.6 SECONDS)
+	playsound(target_living,'sound/weapons/alien_claw_block.ogg', 75, 1)
 	apply_cooldown()
 	return ..()
 
