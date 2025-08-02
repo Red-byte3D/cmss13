@@ -220,6 +220,7 @@
 /// NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
 #define LOWEST_EVER_PLANE -200
 
+
 #define OPEN_SPACE_PLANE_END -20
 // Do no put anything between these two, adjust more z level support as needed
 #define OPEN_SPACE_PLANE_START -9
@@ -232,6 +233,8 @@
 #define GAME_PLANE -6
 /// Above Game Plane. For things which are above game objects, but below screen effects.
 #define ABOVE_GAME_PLANE -5
+///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
+#define SEETHROUGH_PLANE -2
 /// Roof plane, disappearing when entering buildings
 #define ROOF_PLANE -4
 
