@@ -39,9 +39,6 @@
 
 	render_source_atom.render_source = "*transparent_bigmob[personal_uid]"
 
-	var/datum/action/toggle_seethrough/action = new(src)
-	action.Grant(parent)
-
 /datum/component/seethrough_mob/Destroy(force, silent)
 	QDEL_NULL(render_source_atom)
 	return ..()
@@ -51,9 +48,6 @@
 	SIGNAL_HANDLER
 
 	var/mob/fool = parent
-	var/datum/hud/our_hud = fool.hud_used
-	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
-		seethrough.unhide_plane(fool)
 
 	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
 	render_source_atom.pixel_x = -fool.pixel_x
@@ -72,7 +66,7 @@
 
 	if(clickthrough)
 		//Special plane so we can click through the overlay
-		SET_PLANE_EXPLICIT(trickery_image, SEETHROUGH_PLANE, fool)
+		trickery_image.plane = SEETHROUGH_PLANE
 
 	fool.client.images += trickery_image
 
@@ -102,9 +96,6 @@
 
 	var/mob/fool = parent
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
-	var/datum/hud/our_hud = fool.hud_used
-	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
-		seethrough.hide_plane(fool)
 	clear_image(trickery_image, fool.client)
 
 /datum/component/seethrough_mob/proc/toggle_active()
@@ -114,22 +105,13 @@
 	else
 		untrick_mob()
 
-/datum/action/toggle_seethrough
+/datum/action/xeno_action/onclick/toggle_seethrough
 	name = "Toggle Seethrough"
-	desc = "Allows you to see behind your massive body and click through it."
-	button_icon = 'icons/mob/actions/actions_xeno.dmi'
-	button_icon_state = "alien_sneak"
-	background_icon_state = "bg_alien"
 
-/datum/action/toggle_seethrough/Remove(mob/remove_from)
-	var/datum/component/seethrough_mob/seethroughComp = target
-	if(seethroughComp.is_active)
-		seethroughComp.untrick_mob()
-	return ..()
 
-/datum/action/toggle_seethrough/Trigger(trigger_flags)
+/datum/action/xeno_action/onclick/toggle_seethrough/use_ability(atom/target)
+
+	var/datum/component/seethrough_mob/seethroughComp = owner.GetComponent(/datum/component/seethrough_mob)
 	. = ..()
-	if(!.)
-		return
-	var/datum/component/seethrough_mob/seethroughComp = target
+
 	seethroughComp.toggle_active()
