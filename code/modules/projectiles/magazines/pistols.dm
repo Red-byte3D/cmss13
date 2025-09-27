@@ -2,6 +2,19 @@
 //-------------------------------------------------------
 //M4A3 PISTOL
 
+
+/obj/item/ammo_magazine/pistol/bubbles
+
+	name = "water canister"
+	desc = "it holds water"
+	caliber = "its...water"
+	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/USCM/pistols.dmi'
+	icon_state = "m4a3"
+	w_class = SIZE_SMALL
+	default_ammo = /datum/ammo/bullet/pistol/bubble
+	gun_type = /obj/item/weapon/gun/pistol/m4a3/m4a3/bubble
+
+
 /obj/item/ammo_magazine/pistol
 	name = "\improper M4A3 magazine (9mm)"
 	desc = "A 9mm pistol magazine for the M4A3."

@@ -166,3 +166,11 @@
 	RegisterSignal(src, COMSIG_GUN_GAME_REGISTER, PROC_REF(move_onto_next_gun))
 	ADD_TRAIT(src, GUN_GAME_TRAIT, TRAIT_SOURCE_GUNGAME)
 	src.current_gun = src
+
+/obj/item/weapon/gun/pistol/m4a3/m4a3/bubble
+
+	name = "The End of all Pistols"
+	desc = "it shoots bubbles.."
+	icon = 'icons/obj/items/weapons/guns/guns_by_faction/USCM/pistols.dmi'
+	icon_state = "m4a4"
+	item_state = "m4a4"
