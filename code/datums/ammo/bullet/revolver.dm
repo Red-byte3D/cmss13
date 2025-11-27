@@ -26,9 +26,16 @@
 	penetration = ARMOR_PENETRATION_TIER_4
 	accuracy = HIT_ACCURACY_TIER_3
 
-/datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/entity, obj/projectile/bullet)
-	slowdown(entity, bullet)
-	pushback(entity, bullet, 4)
+/datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/M, obj/projectile/bullet)
+	var/datum/effects/revolver_damage_stacks/PAS = null
+	for(var/datum/effects/revolver_damage_stacks/revolver_effect in M.effects_list)
+		PAS = revolver_effect
+		break
+
+	if (PAS == null)
+		new /datum/effects/revolver_damage_stacks(M)
+		return
+
 
 /datum/ammo/bullet/revolver/incendiary
 	name = "incendiary revolver bullet"
