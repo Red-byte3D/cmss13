@@ -27,14 +27,21 @@
 	accuracy = HIT_ACCURACY_TIER_3
 
 /datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/M, obj/projectile/bullet)
-	var/datum/effects/revolver_damage_stacks/PAS = null
-	for(var/datum/effects/revolver_damage_stacks/revolver_effect in M.effects_list)
-		PAS = revolver_effect
+	..()
+
+	if(!iscarbon(M))
+		return
+
+
+	var/datum/effects/revolver_damage_stacks/RDS = null
+	for(var/datum/effects/revolver_damage_stacks/RZD in M.effects_list)
+		RDS = RZD
 		break
 
-	if (PAS == null)
+	if (RDS == null)
 		new /datum/effects/revolver_damage_stacks(M)
-		return
+	else
+		RDS.increment_stack_count()
 
 
 /datum/ammo/bullet/revolver/incendiary
