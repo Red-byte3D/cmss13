@@ -499,6 +499,7 @@
 #include "code\datums\effects\heal_over_time.dm"
 #include "code\datums\effects\neurotoxin.dm"
 #include "code\datums\effects\plasma_over_time.dm"
+#include "code\datums\effects\revolver_stuff.dm"
 #include "code\datums\effects\tether.dm"
 #include "code\datums\effects\weak_spray_stack.dm"
 #include "code\datums\effects\mob_crit\crit.dm"
