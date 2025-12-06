@@ -447,7 +447,7 @@
 /turf/open/auto_turf/hybrisa_auto_turf/layer2,
 /area/lv759/indoors/caves/west_caves)
 "abk" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/plating/plating_catwalk/prison,
 /area/lv759/indoors/caves/north_west_caves)
 "abl" = (
@@ -1236,7 +1236,7 @@
 /area/lv759/indoors/mining_outpost/south)
 "adq" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /obj/effect/landmark/corpsespawner/hybrisa/kelland_miner,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
@@ -5516,7 +5516,7 @@
 /turf/open/auto_turf/hybrisa_auto_turf/layer3,
 /area/lv759/indoors/caves/east_caves/north)
 "aoa" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/hybrisa/street/sidewalk/west,
 /area/lv759/outdoors/mining_outpost/south_entrance)
 "aob" = (
@@ -5850,18 +5850,6 @@
 	},
 /turf/open/floor/hybrisa/metal/grated/east,
 /area/lv759/outdoors/colony_streets/north_east_street)
-"apa" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment,
-/obj/effect/hybrisa/misc/fake/wire/red{
-	dir = 4
-	},
-/obj/effect/hybrisa/misc/fake/wire/blue{
-	dir = 4;
-	pixel_y = 6
-	},
-/turf/open/floor/plating/plating_catwalk/prison,
-/area/lv759/outdoors/colony_streets/north_street)
 "apb" = (
 /obj/effect/decal/medical_decals{
 	icon_state = "triagedecalbottom";
@@ -12655,7 +12643,7 @@
 /obj/structure/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/darkbrown2/west,
 /area/lv759/indoors/power_plant)
 "beL" = (
@@ -12827,7 +12815,7 @@
 	icon_state = "N";
 	pixel_y = 1
 	},
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/open/floor/corsat,
 /area/lv759/indoors/spaceport/engineering)
@@ -17162,7 +17150,7 @@
 	color = "#a6aeab";
 	dir = 10
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/tank/water,
 /turf/open/floor/plating,
 /area/lv759/indoors/wy_research_complex/southeastexit)
 "bOt" = (
@@ -17512,9 +17500,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
 /obj/effect/hybrisa/misc/fake/wire/blue{
 	pixel_x = -4
 	},
@@ -17743,7 +17728,7 @@
 	name = "floor panel"
 	},
 /obj/effect/decal/strata_decals/catwalk/prison,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /turf/open/floor/shiva/radiator_tile2,
 /area/lv759/outdoors/landing_zone_1)
 "bSj" = (
@@ -19751,7 +19736,7 @@
 /obj/structure/sign/safety/hazard{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /obj/effect/decal/warning_stripes{
 	icon_state = "cargo"
 	},
@@ -20711,7 +20696,7 @@
 /area/lv759/indoors/weyyu_office/floor)
 "cnH" = (
 /obj/structure/pipes/standard/simple/hidden/dark,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/floor_plate/southwest,
 /area/lv759/indoors/wy_research_complex/vehicledeploymentbay)
 "cnJ" = (
@@ -20819,7 +20804,7 @@
 /area/lv759/indoors/recycling_plant/synthetic_storage)
 "coo" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating/platingdmg1,
 /area/lv759/indoors/mining_outpost/south)
 "cor" = (
@@ -26395,7 +26380,7 @@
 /turf/open/floor/hybrisa/tile/tilewhite,
 /area/lv759/indoors/hospital/patient_ward)
 "dcF" = (
-/obj/structure/reagent_dispensers/fueltank/oxygentank,
+/obj/structure/reagent_dispensers/tank/fuel/oxygentank,
 /obj/structure/machinery/light{
 	dir = 4
 	},
@@ -29820,7 +29805,7 @@
 /turf/open/floor/almayer/blackfull/west,
 /area/lv759/indoors/wy_research_complex/hallwaysouthwest)
 "dCY" = (
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/open/hybrisa/street/asphalt,
 /area/lv759/outdoors/landing_zone_2)
@@ -31487,7 +31472,7 @@
 /obj/structure/machinery/light/small/blue{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /obj/structure/pipes/standard/simple/hidden/dark{
 	dir = 5
 	},
@@ -31689,7 +31674,7 @@
 /area/lv759/indoors/spaceport/docking_bay_1)
 "dSK" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/structure/machinery/light/small{
 	dir = 4
@@ -34426,7 +34411,7 @@
 	},
 /obj/structure/platform/metal/almayer/east,
 /obj/structure/pipes/vents/pump_hybrisa,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/plating/platingdmg3/west,
 /area/lv759/indoors/hospital/maintenance_north)
 "enA" = (
@@ -37813,7 +37798,7 @@
 	icon_state = "igniter0";
 	name = "floor panel"
 	},
-/obj/structure/reagent_dispensers/fueltank/oxygentank,
+/obj/structure/reagent_dispensers/tank/fuel/oxygentank,
 /turf/open/floor/corsat,
 /area/lv759/indoors/power_plant/gas_generators)
 "eOP" = (
@@ -41268,7 +41253,7 @@
 /obj/structure/platform_decoration/metal/almayer,
 /obj/effect/decal/hybrisa/dirt,
 /obj/structure/pipes/standard/simple/hidden/dark,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/darkbrown2/east,
 /area/lv759/indoors/mining_outpost/vehicledeployment)
 "fqd" = (
@@ -44931,7 +44916,7 @@
 	pixel_y = 11
 	},
 /obj/effect/decal/cleanable/liquid_fuel,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/strata/orange_edge/north,
 /area/lv759/indoors/wy_research_complex/vehicledeploymentbay)
 "fTf" = (
@@ -45680,7 +45665,7 @@
 "fYB" = (
 /obj/structure/platform_decoration/metal/hybrisa/metalplatformdeco6/east,
 /obj/effect/decal/hybrisa/road/lines2,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/darkyellow2,
 /area/lv759/indoors/caves/wy_research_complex_entrance)
 "fYG" = (
@@ -46954,7 +46939,7 @@
 	icon_state = "igniter0";
 	name = "floor panel"
 	},
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/structure/machinery/light/spot/blue{
 	dir = 4;
 	pixel_x = 8
@@ -49651,7 +49636,7 @@
 	name = "floor panel"
 	},
 /obj/structure/platform/metal/strata/north,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /turf/open/floor/shiva/radiator_tile2,
 /area/lv759/indoors/wy_research_complex/hangarbay)
 "gFE" = (
@@ -50335,7 +50320,7 @@
 "gKg" = (
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/hybrisa/dirt,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/structure/closet/hydrant{
 	pixel_y = 32
 	},
@@ -52540,7 +52525,7 @@
 /turf/open/hybrisa/street/sidewalk/west,
 /area/lv759/outdoors/colony_streets/central_streets)
 "hbU" = (
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /turf/open/floor/plating,
 /area/lv759/indoors/spaceport/docking_bay_2)
 "hbV" = (
@@ -52637,7 +52622,7 @@
 	name = "Pipe"
 	},
 /obj/effect/decal/hybrisa/dirt,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/corsat,
 /area/lv759/indoors/power_plant/gas_generators)
 "hcI" = (
@@ -53335,7 +53320,7 @@
 /area/lv759/indoors/wy_research_complex/xenoarcheology)
 "hig" = (
 /obj/item/bananapeel{
-	desc = "An experimental B8 Smart-Scope. Based on the technologies used in the Smart Gun by ARMAT, this sight has integrated IFF systems. It can only attach to the L42A Battle Rifle, M44 Combat Revolver, and M46C Pulse Rifle. This one appears to be covered in gun oil";
+	desc = "An experimental B8 Smart-Scope. Based on the technologies used in the Smart Gun by Armat, this sight has integrated IFF systems. It can only attach to the L42A Battle Rifle, M44 Combat Revolver, and M46C Pulse Rifle. This one appears to be covered in gun oil";
 	icon = 'icons/obj/items/weapons/guns/attachments/rail.dmi';
 	icon_state = "iffbarrel";
 	name = "Broken B8 Smart-Scope"
@@ -53992,7 +53977,7 @@
 	color = "#6b675e"
 	},
 /obj/item/tool/kitchen/tray,
-/obj/item/reagent_container/glass/beaker/silver,
+/obj/item/reagent_container/glass/beaker/catalyst/silver,
 /obj/item/reagent_container/glass/beaker,
 /obj/item/reagent_container/glass/beaker,
 /obj/item/reagent_container/glass/beaker,
@@ -59778,7 +59763,7 @@
 	pixel_x = 5;
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/darkyellow2/north,
 /area/lv759/indoors/garage_workshop)
 "ify" = (
@@ -60148,7 +60133,7 @@
 "ihJ" = (
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/hybrisa/dirt,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/structure/prop/hybrisa/misc/buildinggreebliessmall/smallvent3{
 	pixel_y = 28;
 	pixel_x = 4
@@ -61147,7 +61132,7 @@
 "iqj" = (
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/cleanable/blood,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating,
 /area/lv759/indoors/mining_outpost/south)
 "iqm" = (
@@ -64309,7 +64294,7 @@
 /obj/structure/closet/crate/miningcar,
 /obj/effect/landmark/item_pool_spawner/survivor_ammo/buckshot,
 /obj/effect/spawner/random/technology_scanner,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating/platingdmg3/west,
 /area/lv759/indoors/mining_outpost/south)
 "iNB" = (
@@ -68785,7 +68770,7 @@
 /turf/closed/wall/hybrisa/spaceport,
 /area/lv759/indoors/spaceport/cuppajoes)
 "jxp" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/tank/water,
 /obj/item/tool/mop,
 /turf/open/floor/almayer/plating/northeast,
 /area/lv759/indoors/spaceport/baggagehandling)
@@ -72861,7 +72846,7 @@
 /obj/effect/decal/warning_stripes{
 	icon_state = "N"
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/ramptop/east,
 /area/lv759/indoors/landing_zone_2/kmcc_hub_cargo)
 "ker" = (
@@ -80854,17 +80839,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/obj/structure/sign/poster/art{
-	pixel_y = 32
-	},
 /obj/effect/hybrisa/misc/fake/wire/blue{
 	pixel_x = -4
 	},
 /obj/effect/hybrisa/misc/fake/wire/red{
 	pixel_x = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 8
 	},
 /turf/open/floor/plating/plating_catwalk/prison,
 /area/lv759/indoors/bar)
@@ -83446,7 +83425,7 @@
 /turf/open/floor/prison/darkyellow2/southwest,
 /area/lv759/indoors/wy_research_complex/hallwaysoutheast)
 "lGd" = (
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /turf/open/floor/strata/orange_edge/east,
 /area/lv759/indoors/wy_research_complex/hangarbay)
 "lGg" = (
@@ -84043,7 +84022,7 @@
 /turf/open/auto_turf/hybrisa_auto_turf/layer2,
 /area/lv759/indoors/caves/central_caves)
 "lKs" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/plating/plating_catwalk/prison,
 /area/lv759/indoors/mining_outpost/vehicledeployment)
 "lKv" = (
@@ -86498,7 +86477,7 @@
 /area/lv759/indoors/spaceport/starglider)
 "mdy" = (
 /obj/effect/decal/cleanable/liquid_fuel,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/open/floor/strata/blue3/east,
 /area/lv759/indoors/spaceport/docking_bay_2)
@@ -90850,15 +90829,6 @@
 	icon_state = "N";
 	pixel_y = 3
 	},
-/obj/structure/barricade/handrail/kutjevo{
-	dir = 8
-	},
-/obj/structure/barricade/handrail/kutjevo{
-	dir = 1;
-	layer = 5;
-	level = 5;
-	pixel_y = 8
-	},
 /turf/open/floor/corsat/sigma,
 /area/lv759/indoors/wy_research_complex/xenobiology)
 "mLa" = (
@@ -92673,7 +92643,7 @@
 /area/lv759/indoors/caves/south_west_caves)
 "nbg" = (
 /obj/effect/decal/cleanable/liquid_fuel,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/corsat/plate,
 /area/lv759/indoors/colonial_marshals/garage)
 "nbm" = (
@@ -93261,7 +93231,7 @@
 	pixel_x = 19;
 	pixel_y = 25
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/plating/platingdmg3/west,
 /area/lv759/indoors/meridian/meridian_maintenance)
 "nfE" = (
@@ -94448,17 +94418,11 @@
 /obj/structure/pipes/standard/simple/hidden/dark{
 	dir = 4
 	},
-/obj/structure/disposalpipe/tagger{
-	dir = 4
-	},
 /obj/effect/hybrisa/misc/fake/wire/red{
 	pixel_x = 4
 	},
 /obj/effect/hybrisa/misc/fake/wire/blue{
 	pixel_x = -4
-	},
-/obj/structure/pipes/standard/simple/hidden/dark{
-	dir = 4
 	},
 /turf/open/floor/plating/plating_catwalk/prison,
 /area/lv759/indoors/colonial_marshals/prisoners_foyer)
@@ -97034,7 +96998,7 @@
 /obj/structure/sign/poster/safety{
 	pixel_y = 32
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/plating,
 /area/lv759/indoors/meridian/meridian_maintenance)
 "nKz" = (
@@ -100044,7 +100008,7 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/liquid_fuel,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/structure/pipes/standard/simple/hidden/dark,
 /turf/open/floor/strata/multi_tiles/southeast,
 /area/lv759/indoors/wy_research_complex/hangarbay)
@@ -101702,7 +101666,7 @@
 /turf/open/hybrisa/street/underground_unweedable,
 /area/lv759/outdoors/colony_streets/central_streets)
 "osb" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/corsat/squares,
 /area/lv759/indoors/wy_research_complex/southeastexit)
 "ose" = (
@@ -101776,7 +101740,7 @@
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/hybrisa/dirt,
 /obj/structure/machinery/light/small,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating,
 /area/lv759/indoors/mining_outpost/south)
 "osB" = (
@@ -102355,7 +102319,7 @@
 /obj/structure/machinery/light/double/blue{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/darkyellow2/northeast,
 /area/lv759/indoors/wy_research_complex/hallwaysoutheast)
 "oxC" = (
@@ -104563,7 +104527,7 @@
 "oPm" = (
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/structure/pipes/vents/pump_hybrisa,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/corsat,
 /area/lv759/indoors/spaceport/maintenance_east)
 "oPt" = (
@@ -104832,7 +104796,7 @@
 /turf/open/floor/prison/floor_plate/southwest,
 /area/lv759/indoors/meridian/meridian_office)
 "oRD" = (
-/obj/structure/reagent_dispensers/fueltank/oxygentank,
+/obj/structure/reagent_dispensers/tank/fuel/oxygentank,
 /obj/structure/machinery/light{
 	dir = 8
 	},
@@ -108988,7 +108952,7 @@
 /obj/structure/barricade/handrail/strata{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /obj/structure/sign/safety/synth_storage{
 	pixel_x = 2;
 	pixel_y = 33
@@ -111936,7 +111900,7 @@
 	icon_state = "igniter0";
 	name = "floor panel"
 	},
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/effect/hybrisa/misc/fake/wire/red{
 	pixel_x = 4
 	},
@@ -112616,12 +112580,6 @@
 /obj/structure/barricade/handrail/hybrisa/road/plastic/red{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8
-	},
-/obj/structure/barricade/handrail/hybrisa/road/plastic/red{
-	dir = 4
-	},
 /obj/effect/hybrisa/misc/fake/wire/red{
 	pixel_x = 4
 	},
@@ -113095,7 +113053,7 @@
 	color = "#a6aeab";
 	dir = 5
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/plating,
 /area/lv759/indoors/landing_zone_2/kmcc_hub_maintenance_north)
 "qfl" = (
@@ -115573,7 +115531,7 @@
 /obj/effect/decal/hybrisa/road/road_stop{
 	icon_state = "stop_decal5"
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/hybrisa/street/asphalt,
 /area/lv759/outdoors/colony_streets/north_street)
 "qye" = (
@@ -117200,13 +117158,6 @@
 	dir = 8;
 	layer = 4
 	},
-/obj/effect/decal/hybrisa/road/road_edge,
-/obj/effect/decal/hybrisa/road/lines4,
-/obj/effect/decal/hybrisa/road/lines1,
-/obj/structure/barricade/handrail{
-	dir = 8;
-	layer = 4
-	},
 /obj/effect/decal/hybrisa/trash{
 	dir = 1;
 	icon_state = "trash_11"
@@ -117448,7 +117399,7 @@
 	icon_state = "S";
 	pixel_y = -1
 	},
-/obj/structure/reagent_dispensers/fueltank{
+/obj/structure/reagent_dispensers/tank/fuel{
 	layer = 2.9
 	},
 /turf/open/floor/plating/plating_catwalk/prison,
@@ -117983,12 +117934,12 @@
 "qRx" = (
 /obj/structure/surface/table/woodentable/fancy,
 /obj/item/storage/photo_album,
-/obj/item/clothing/accessory/medal/bronze/conduct{
+/obj/item/clothing/accessory/medal/legacy/distinguished_conduct{
 	pixel_y = 4;
 	pixel_x = -2;
 	layer = 3.03
 	},
-/obj/item/clothing/accessory/medal/bronze/heart{
+/obj/item/clothing/accessory/medal/legacy/bronze_heart{
 	pixel_y = 12;
 	pixel_x = 4
 	},
@@ -118656,7 +118607,7 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/strata/yellow3/west,
 /area/lv759/indoors/power_plant/geothermal_generators)
 "qWU" = (
@@ -121844,7 +121795,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison,
 /area/lv759/outdoors/colony_streets/south_west_street)
 "rxm" = (
@@ -123309,7 +123260,7 @@
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/hybrisa/dirt,
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating,
 /area/lv759/indoors/mining_outpost/south)
 "rGG" = (
@@ -123517,7 +123468,6 @@
 /turf/open/floor/almayer/blackcorner/east,
 /area/lv759/indoors/wy_research_complex/mainlabs)
 "rHY" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment,
 /obj/effect/hybrisa/misc/fake/wire/blue{
 	dir = 4;
@@ -126911,7 +126861,7 @@
 /area/lv759/outdoors/colony_streets/south_east_street)
 "sgB" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating,
 /area/lv759/indoors/mining_outpost/south)
 "sgD" = (
@@ -135367,7 +135317,7 @@
 /turf/open/floor/prison/cell_stripe/east,
 /area/lv759/indoors/hospital/virology)
 "tsN" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/cell_stripe/north,
 /area/lv759/indoors/wy_research_complex/hallwaynorth)
 "tsR" = (
@@ -136992,7 +136942,7 @@
 	layer = 3.33
 	},
 /obj/effect/decal/strata_decals/catwalk/prison,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/structure/platform/metal/strata/west,
 /turf/open/floor/shiva/radiator_tile2,
 /area/lv759/indoors/spaceport/docking_bay_2)
@@ -137270,7 +137220,7 @@
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /obj/structure/pipes/vents/pump_hybrisa,
 /obj/structure/prop/invuln/overhead_pipe{
 	color = "#a6aeab";
@@ -138117,7 +138067,7 @@
 /turf/open/floor/plating,
 /area/lv759/indoors/recycling_plant_waste_disposal_incinerator)
 "tOZ" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/hybrisa/tile/cementflat,
 /area/lv759/indoors/mining_outpost/east_deploymentbay)
 "tPc" = (
@@ -145381,7 +145331,7 @@
 /area/lv759/indoors/wy_research_complex/hangarbay)
 "uRm" = (
 /obj/effect/decal/hybrisa/dirt,
-/obj/item/ammo_magazine/smg/p90/twe,
+/obj/item/ammo_magazine/smg/p90/ap,
 /turf/open/floor/plating/platingdmg3/west,
 /area/lv759/indoors/mining_outpost/south)
 "uRo" = (
@@ -145696,7 +145646,7 @@
 /turf/open/floor/hybrisa/tile/tilegrey,
 /area/lv759/indoors/wy_research_complex/hallwaysoutheast)
 "uTp" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/tank/water,
 /turf/open/floor/corsat,
 /area/lv759/indoors/spaceport/maintenance_east)
 "uTr" = (
@@ -149222,7 +149172,7 @@
 /turf/open/floor/plating,
 /area/lv759/indoors/mining_outpost/east_dorms)
 "vwc" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/tank/water,
 /obj/structure/barricade/handrail/kutjevo{
 	dir = 4;
 	icon_state = "t_handrail_b_cap";
@@ -152486,7 +152436,7 @@
 	},
 /obj/effect/decal/cleanable/liquid_fuel,
 /obj/structure/platform_decoration/metal/strata/west,
-/obj/structure/reagent_dispensers/fueltank/spacecraft,
+/obj/structure/reagent_dispensers/tank/fuel/spacecraft,
 /turf/open/floor/shiva/radiator_tile2,
 /area/lv759/indoors/wy_research_complex/hangarbay)
 "vVq" = (
@@ -153399,7 +153349,7 @@
 /area/lv759/indoors/mining_outpost/south)
 "wcX" = (
 /obj/effect/decal/cleanable/liquid_fuel,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/strata/multi_tiles,
 /area/lv759/indoors/wy_research_complex/vehicledeploymentbay)
 "wda" = (
@@ -153504,7 +153454,7 @@
 /obj/structure/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/tank/water,
 /obj/structure/prop/invuln/overhead_pipe{
 	color = "#a6aeab";
 	dir = 1
@@ -163986,7 +163936,7 @@
 /turf/open/floor/prison/cell_stripe/north,
 /area/lv759/indoors/landing_zone_2/kmcc_hub_cargo)
 "xGH" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/corsat/box,
 /area/lv759/indoors/wy_research_complex/researchanddevelopment)
 "xGJ" = (
@@ -164637,7 +164587,7 @@
 /area/lv759/outdoors/colony_streets/south_east_street)
 "xLN" = (
 /obj/structure/pipes/vents/pump_hybrisa,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/tank/fuel,
 /turf/open/floor/prison/darkbrown2,
 /area/lv759/indoors/recycling_plant/synthetic_storage)
 "xLP" = (
@@ -164780,20 +164730,11 @@
 /obj/structure/pipes/standard/simple/hidden/dark{
 	dir = 4
 	},
-/obj/structure/closet/hydrant{
-	pixel_y = 32
-	},
-/obj/structure/disposalpipe/tagger{
-	dir = 4
-	},
 /obj/effect/hybrisa/misc/fake/wire/red{
 	pixel_x = 4
 	},
 /obj/effect/hybrisa/misc/fake/wire/blue{
 	pixel_x = -4
-	},
-/obj/structure/pipes/standard/simple/hidden/dark{
-	dir = 4
 	},
 /turf/open/floor/plating/plating_catwalk/prison,
 /area/lv759/indoors/colonial_marshals/prisoners_foyer)
@@ -197880,7 +197821,7 @@ hQg
 wpm
 ovC
 wpm
-apa
+qbK
 pud
 wpm
 xRp
