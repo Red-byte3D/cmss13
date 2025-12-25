@@ -26,22 +26,23 @@
 	penetration = ARMOR_PENETRATION_TIER_4
 	accuracy = HIT_ACCURACY_TIER_3
 
-/datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/M, obj/projectile/bullet)
+/datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/target_mob, obj/projectile/bullet)
 	..()
 
-	if(!iscarbon(M))
+	var/mob/living/living_target = target_mob
+
+	if(!iscarbon(living_target))
 		return
 
+	if(target_mob == bullet.original)
+		var/stack_counter = 0
+		var/image/target_overlay = image('icons/effects/effects.dmi', "revolver_1")
 
-	var/datum/effects/revolver_damage_stacks/RDS = null
-	for(var/datum/effects/revolver_damage_stacks/RZD in M.effects_list)
-		RDS = RZD
-		break
 
-	if (RDS == null)
-		new /datum/effects/revolver_damage_stacks(M)
-	else
-		RDS.increment_stack_count()
+		if(istype(living_target, /mob/living/carbon))
+			target_mob.overlays += target_overlay
+
+
 
 
 /datum/ammo/bullet/revolver/incendiary
