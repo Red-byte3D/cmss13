@@ -136,3 +136,22 @@
 	I.add_fingerprint(M)
 	qdel(src)
 	return
+
+
+/obj/structure/x_gift
+
+	name = "Resin Covered Present"
+	desc = "Straight out of xenomorph prime."
+	icon = 'icons/obj/items/gifts.dmi'
+	icon_state = "gift1"
+
+
+
+/obj/structure/x_gift/proc/spawn_gift()
+
+
+	var/gift_to_give = pick(
+
+	"wawa"
+
+	)

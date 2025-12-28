@@ -1302,3 +1302,15 @@
 	playsound(loc, "alien_claw_metal", 25, 1)
 	attacked()
 	return XENO_ATTACK_ACTION
+
+
+
+/obj/structure/x_gift/attack_alien(mob/living/carbon/xenomorph/alien)
+	. = ..()
+
+
+	var/mob/living/carbon/xenomorph/clicking_queen = alien
+
+	if(!do_after(clicking_queen, 3 SECONDS, INTERRUPT_ALL, BUSY_ICON_FRIENDLY))
+		return
+	to_chat(clicking_queen, SPAN_XENOMINORWARNING("We start unwrapping our present!"))
