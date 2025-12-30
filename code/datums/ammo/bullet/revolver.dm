@@ -26,24 +26,11 @@
 	penetration = ARMOR_PENETRATION_TIER_4
 	accuracy = HIT_ACCURACY_TIER_3
 
-/datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/target_mob, obj/projectile/bullet)
+/datum/ammo/bullet/revolver/heavy/set_bullet_traits()
 	..()
-
-	var/mob/living/living_target = target_mob
-
-	if(!iscarbon(living_target))
-		return
-
-	if(target_mob == bullet.original)
-		var/stack_counter = 0
-		var/image/target_overlay = image('icons/effects/effects.dmi', "revolver_1")
-
-
-		if(istype(living_target, /mob/living/carbon))
-			target_mob.overlays += target_overlay
-
-
-
+	LAZYADD(traits_to_give, list(
+		BULLET_TRAIT_ENTRY(/datum/element/bullet_trait_heavy)
+	))
 
 /datum/ammo/bullet/revolver/incendiary
 	name = "incendiary revolver bullet"
