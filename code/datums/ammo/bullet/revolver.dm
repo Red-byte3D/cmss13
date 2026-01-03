@@ -25,12 +25,19 @@
 	damage = 35
 	penetration = ARMOR_PENETRATION_TIER_4
 	accuracy = HIT_ACCURACY_TIER_3
+	var/stack_per_hit = 1
 
 /datum/ammo/bullet/revolver/heavy/set_bullet_traits()
 	..()
 	LAZYADD(traits_to_give, list(
 		BULLET_TRAIT_ENTRY(/datum/element/bullet_trait_heavy)
 	))
+
+/datum/ammo/bullet/revolver/heavy/on_hit_mob(mob/M, obj/projectile/bullet)
+	. = ..()
+	M.AddComponent(/datum/component/status_effect/heavy_stun_build, stack_per_hit)
+
+
 
 /datum/ammo/bullet/revolver/incendiary
 	name = "incendiary revolver bullet"
