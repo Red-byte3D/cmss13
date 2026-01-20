@@ -19,7 +19,7 @@
 	monkey_amount = 5
 	corpses_to_spawn = 0
 	flags_round_type = MODE_INFESTATION|MODE_FOG_ACTIVATED|MODE_NEW_SPAWN
-	static_comms_amount = 1
+	static_comms_amount = 2
 	var/round_status_flags
 	var/next_stat_check = 0
 	var/list/running_round_stats = list()
@@ -411,12 +411,11 @@
 
 	var/obj/item/card/id/card = person_in_charge.get_idcard()
 	if(card)
-		var/list/access = card.access
 		var/static/to_add = list(ACCESS_MARINE_SENIOR, ACCESS_MARINE_DATABASE, ACCESS_MARINE_COMMAND)
-		
-		var/new_access = access | to_add
-		if(access ~! new_access)
-			access = new_access
+
+		var/new_access = card.access | to_add
+		if(card.access ~! new_access)
+			card.access = new_access
 			announce_addendum += "\nSenior Command access added to ID."
 
 	announce_addendum += "\nA Command headset is available in the Command Tablet cabinet."
