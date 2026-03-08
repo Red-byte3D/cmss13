@@ -13,7 +13,6 @@
 		/datum/action/xeno_action/activable/transfer_plasma,
 	)
 
-
 	actions_to_add = list(
 		/datum/action/xeno_action/activable/lets_go_gambling,
 	)
@@ -25,24 +24,8 @@
 	gamba.recalculate_everything()
 	playsound(gamba, 'sound/voice/play_on_init_gamble.ogg', 50)
 
-/datum/behavior_delegate/drone_gambler // copy paste spam so the caste can handle abilities.
-
+/datum/behavior_delegate/drone_gambler
 	name = "Gambler Drone Behavior Delegate"
-
-	var/shield_decay_time = 15 SECONDS // Time in deciseconds before our shield decays
-	var/slash_charge_cdr = 3 SECONDS // Amount to reduce charge cooldown by per slash
-	var/knockdown_amount = 1.6
-	var/fling_distance = 3
-	var/empower_targets = 0
-	var/super_empower_threshold = 3
-	var/dmg_buff_per_target = 2
-	var/lunging = FALSE
-	var/kills = 2
-	var/invis_recharge_time = 20 SECONDS
-	var/invis_start_time = -1 // Special value for when we're not invisible
-	var/invis_duration = 30 SECONDS // so we can display how long the lurker is invisible to it
-	var/base_fury = 999999
-	var/next_slash_buffed = FALSE
 
 /mob/living/carbon/xenomorph/drone/proc/queen_gut(atom/target)
 	if(!iscarbon(target))
@@ -97,15 +80,13 @@
 
 		attack_log += text("\[[time_stamp()]\] <font color='red'>gibbed [key_name(victim)]</font>")
 		victim.attack_log += text("\[[time_stamp()]\] <font color='orange'>was gibbed by [key_name(src)]</font>")
-		victim.gib(create_cause_data("Queen gutting", src)) //Splut
+		victim.gib(create_cause_data("Queen gutting", src))
 
 		stop_pulling()
 		return TRUE
 
 /mob/living/carbon/xenomorph/drone/start_pulling(atom/movable/movable_atom, lunge)
-	var/mob/living/carbon/xenomorph/enterpanuer_drone = src //buy my books
-	var/datum/behavior_delegate/drone_gambler/gamba_delegate = enterpanuer_drone.behavior_delegate
-	if (!check_state())
+	if(!check_state())
 		return FALSE
 
 	if(!isliving(movable_atom))
@@ -113,16 +94,16 @@
 	var/mob/living/living_mob = movable_atom
 	var/should_neckgrab = !(src.can_not_harm(living_mob)) && lunge
 
-	if(!QDELETED(living_mob) && !QDELETED(living_mob.pulledby) && living_mob != src ) //override pull of other mobs
+	if(!QDELETED(living_mob) && !QDELETED(living_mob.pulledby) && living_mob != src)
 		visible_message(SPAN_WARNING("[src] has broken [living_mob.pulledby]'s grip on [living_mob]!"), null, null, 5)
 		living_mob.pulledby.stop_pulling()
 
 	. = ..(living_mob, lunge, should_neckgrab)
 
-	if(.) //successful pull
+	if(.)
 		if(isxeno(living_mob))
 			var/mob/living/carbon/xenomorph/xeno = living_mob
-			if(xeno.tier >= 2) // Tier 2 castes or higher immune to warrior grab stuns
+			if(xeno.tier >= 2)
 				return
 
 		if(should_neckgrab && living_mob.mob_size < MOB_SIZE_BIG)
@@ -131,11 +112,9 @@
 			living_mob.KnockDown(duration)
 			living_mob.Stun(duration)
 			if(living_mob.pulledby != src)
-				return // Grab was broken, probably as Stun side effect (eg. target getting knocked away from a manned M56D)
+				return
 			visible_message(SPAN_XENOWARNING("[src] grabs [living_mob] by the throat!"),
 			SPAN_XENOWARNING("We grab [living_mob] by the throat!"))
-			gamba_delegate.lunging = TRUE
-			addtimer(CALLBACK(src, PROC_REF(stop_lunging)), get_xeno_stun_duration(living_mob, 2) SECONDS + 1 SECONDS)
 
 /mob/living/carbon/xenomorph/drone/proc/stop_lunging(world_time)
 
@@ -144,39 +123,21 @@
 		return
 	..()
 
-/datum/behavior_delegate/drone_gambler/proc/decloak_handler(mob/source)
-	SIGNAL_HANDLER
-	var/datum/action/xeno_action/onclick/lurker_invisibility/lurker_invis_action = get_action(bound_xeno, /datum/action/xeno_action/onclick/lurker_invisibility)
-	if(istype(lurker_invis_action))
-		lurker_invis_action.invisibility_off(0.5) // Partial refund of remaining time
-
-/// Implementation for enabling invisibility.
-/datum/behavior_delegate/drone_gambler/proc/on_invisibility()
-
-	ADD_TRAIT(bound_xeno, TRAIT_CLOAKED, TRAIT_SOURCE_ABILITY("cloak"))
-	RegisterSignal(bound_xeno, COMSIG_MOB_EFFECT_CLOAK_CANCEL, PROC_REF(decloak_handler))
-	bound_xeno.stealth = TRUE
-	invis_start_time = world.time
-
-/// Implementation for disabling invisibility.
-/datum/behavior_delegate/drone_gambler/proc/on_invisibility_off()
-	bound_xeno.stealth = FALSE
-	REMOVE_TRAIT(bound_xeno, TRAIT_CLOAKED, TRAIT_SOURCE_ABILITY("cloak"))
-	UnregisterSignal(bound_xeno, COMSIG_MOB_EFFECT_CLOAK_CANCEL)
-	invis_start_time = -1
+// ------------------------------------------------
+// LETS GO GAMBLING
+// ------------------------------------------------
 
 /datum/action/xeno_action/activable/lets_go_gambling
 
 	name = "Let's go gambling"
 	action_icon_state = "gardener_plant"
-	plasma_cost = 0 // it costs NOTHING to gamble
+	plasma_cost = 0
 	macro_path = ""
 	action_type = XENO_ACTION_CLICK
 	ability_primacy = XENO_PRIMARY_ACTION_2
 	xeno_cooldown = 10 SECONDS
 
-
-	var/list/real_jackpot = list(  // uber ultra super duper rare stuff
+	var/list/real_jackpot = list(
 		/datum/action/xeno_action/activable/destroy,
 		/datum/action/xeno_action/activable/fluff_ability_5,
 	)
@@ -187,7 +148,6 @@
 		/datum/action/xeno_action/activable/fluff_ability_2,
 		/datum/action/xeno_action/activable/fluff_ability_3,
 	)
-
 
 	var/list/high_end_abilities = list(
 		/datum/action/xeno_action/onclick/crusher_shield,
@@ -203,7 +163,6 @@
 		/datum/action/xeno_action/activable/fluff_ability_3,
 		/datum/action/xeno_action/activable/fluff_ability_4,
 	)
-
 
 	var/list/medium_end_abilities = list(
 		/datum/action/xeno_action/activable/warrior_punch,
@@ -226,51 +185,231 @@
 		/datum/action/xeno_action/activable/fluff_ability_1,
 	)
 
+	// Slot machine vars
+	var/strip_size = 7
+	var/center_slot = 4
+	var/list/spin_delays = list(1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5, 7, 9, 12)
+	var/list/slot_objects = list()
+	var/list/scroll_strip = list()
+	var/strip_pos = 1
+	var/delay_index = 1
+	/// The icon state that was picked — mapped to the actual ability typepath after spin
+	var/winner_icon
+	/// The ability typepath that will be granted when the spin finishes
+	var/winner_ability
+	/// Rarity tier of the current roll, used to play the right sound on finish
+	var/winner_tier
 
-/datum/action/xeno_action/activable/lets_go_gambling/use_ability()
-	var/mob/living/carbon/xenomorph/enterpanuer_drone = owner //buy my books
+// Maps icon states in actions_xeno.dmi to real ability typepaths.
+// Only states that correspond to an actual ability in our pools are included.
+// Any icon state not in this list is treated as a dud and rerolled.
+/datum/action/xeno_action/activable/lets_go_gambling/proc/build_icon_ability_map()
+	return list(
+		"warrior_punch"        = /datum/action/xeno_action/activable/warrior_punch,
+		"fling"                = /datum/action/xeno_action/activable/fling,
+		"pounce"               = /datum/action/xeno_action/activable/pounce/base_prae_dash,
+		"acid_ball"            = /datum/action/xeno_action/activable/prae_acid_ball,
+		"spray_acid"           = /datum/action/xeno_action/activable/spray_acid/base_prae_spray_acid,
+		"pierce"               = /datum/action/xeno_action/activable/pierce,
+		"crusher_stomp"        = /datum/action/xeno_action/onclick/crusher_stomp,
+		"cleave"               = /datum/action/xeno_action/activable/cleave,
+		"tail_lash"            = /datum/action/xeno_action/activable/tail_lash,
+		"crusher_charge"       = /datum/action/xeno_action/activable/pounce/crusher_charge,
+		"scissor_cut"          = /datum/action/xeno_action/activable/scissor_cut,
+		"high_gallop"          = /datum/action/xeno_action/activable/high_gallop,
+		"tremor"               = /datum/action/xeno_action/onclick/tremor,
+		"boiler_trap"          = /datum/action/xeno_action/activable/boiler_trap,
+		"runner_pounce"        = /datum/action/xeno_action/activable/pounce/runner,
+		"lurker_assassinate"   = /datum/action/xeno_action/onclick/lurker_assassinate,
+		"crusher_shield"       = /datum/action/xeno_action/onclick/crusher_shield,
+		"abduct"               = /datum/action/xeno_action/activable/prae_abduct,
+		"empower"              = /datum/action/xeno_action/onclick/empower,
+		"apprehend"            = /datum/action/xeno_action/onclick/apprehend,
+		"feralrush"            = /datum/action/xeno_action/onclick/feralrush,
+		"feralfrenzy"          = /datum/action/xeno_action/activable/feralfrenzy,
+		"predalien_roar"       = /datum/action/xeno_action/onclick/predalien_roar,
+		"retrieve"             = /datum/action/xeno_action/activable/prae_retrieve,
+		"lunge"                = /datum/action/xeno_action/activable/lunge,
+		"lurker_invisibility"  = /datum/action/xeno_action/onclick/lurker_invisibility,
+		"gut"                  = /datum/action/xeno_action/activable/gut,
+		"screech"              = /datum/action/xeno_action/onclick/screech,
+		"destroy"              = /datum/action/xeno_action/activable/destroy,
+		"gardener_plant"       = /datum/action/xeno_action/activable/fluff_ability_1, // mystery
+	)
 
-	if (!enterpanuer_drone.check_state() || enterpanuer_drone.action_busy)
+/datum/action/xeno_action/activable/lets_go_gambling/use_ability(atom/affected_atom)
+	var/mob/living/carbon/xenomorph/enterpanuer_drone = owner
+
+	if(!enterpanuer_drone.check_state() || enterpanuer_drone.action_busy)
 		return
 
-	if (!action_cooldown_check())
+	if(!action_cooldown_check())
 		return
 
-	var/list_result = pick(20;high_end_abilities, 75;medium_end_abilities, 4;jackpot, 1;real_jackpot)
+	var/list/chosen_tier = pick(20;high_end_abilities, 75;medium_end_abilities, 4;jackpot, 1;real_jackpot)
 
-	if(list_result == real_jackpot)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), enterpanuer_drone,'sound/voice/play_on_actual_win.ogg'), 1.25 SECONDS)
-	if(list_result == jackpot)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), enterpanuer_drone,'sound/voice/play_on_rare.ogg'), 1.25 SECONDS)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), enterpanuer_drone, 'sound/voice/play_on_jackpot.ogg'), 1.25 SECONDS)
-	else if(list_result == medium_end_abilities)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), enterpanuer_drone,'sound/voice/play_on_fail.ogg'), 1.25 SECONDS)
-	else if(list_result == high_end_abilities)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), enterpanuer_drone,'sound/voice/play_on_rare.ogg'), 1.25 SECONDS)
+	if(chosen_tier == real_jackpot)
+		winner_tier = "real_jackpot"
+	else if(chosen_tier == jackpot)
+		winner_tier = "jackpot"
+	else if(chosen_tier == high_end_abilities)
+		winner_tier = "high_end"
+	else
+		winner_tier = "medium_end"
 
-	var/datum/action/action_result = pick(list_result)
-	var/datum/action/action_given = give_action(enterpanuer_drone, action_result)
+	winner_ability = pick(chosen_tier)
 
+	var/list/icon_map = build_icon_ability_map()
+	winner_icon = null
+	for(var/state in icon_map)
+		if(icon_map[state] == winner_ability)
+			winner_icon = state
+			break
+	if(!winner_icon)
+		winner_icon = "gardener_plant"
 
-	RegisterSignal(action_given, COMSIG_XENO_ACTION_USED, PROC_REF(delete_ability))
-	addtimer(CALLBACK(src, PROC_REF(delete_ability), action_given, enterpanuer_drone), 10 SECONDS)
+	var/list/all_icons = icon_states('icons/mob/hud/actions_xeno.dmi')
+	var/list/blacklist = list("no name", "template", "template_active", "template_on", "blank", "border_reference")
+	for(var/bad in blacklist)
+		all_icons.Remove(bad)
+
+	scroll_strip = list()
+	var/pre_count = 10 + (strip_size - center_slot)
+	var/post_count = center_slot - 1
+
+	for(var/i = 1 to pre_count)
+		scroll_strip += pick(all_icons)
+	scroll_strip += winner_icon
+	for(var/i = 1 to post_count)
+		scroll_strip += pick(all_icons)
+
+	build_strip_slots(enterpanuer_drone)
+
+	strip_pos = 1
+	delay_index = 1
+
+	update_strip_display(enterpanuer_drone)
 
 	playsound(enterpanuer_drone, 'sound/voice/play_on_use.ogg')
+	addtimer(CALLBACK(src, PROC_REF(spin_step), enterpanuer_drone), spin_delays[1] DECISECONDS, TIMER_STOPPABLE)
+
 	apply_cooldown()
-	..()
+	return ..()
 
-/datum/action/xeno_action/activable/lets_go_gambling/proc/delete_ability(datum/action/source, mob/owner)
+
+/datum/action/xeno_action/activable/lets_go_gambling/proc/build_strip_slots(mob/living/carbon/xenomorph/gamba)
+	if(!gamba.client)
+		return
+
+	clear_strip_slots(gamba)
+
+	for(var/i = 1 to strip_size)
+		var/obj/effect/detector_blip/slot = new /obj/effect/detector_blip()
+		var/col_offset = 4 + (2 * i)
+		slot.screen_loc = "WEST+[i-1]:[col_offset],NORTH-2:26"
+		slot.icon = 'icons/mob/hud/actions_xeno.dmi'
+		slot.icon_state = "blank"
+		slot.plane = ABOVE_TACMAP_PLANE
+		gamba.client.add_to_screen(slot)
+		slot_objects += slot
+
+/datum/action/xeno_action/activable/lets_go_gambling/proc/clear_strip_slots(mob/living/carbon/xenomorph/gamba)
+	for(var/obj/effect/detector_blip/slot as anything in slot_objects)
+		if(gamba && gamba.client)
+			gamba.client.remove_from_screen(slot)
+		qdel(slot)
+	slot_objects = list()
+
+/datum/action/xeno_action/activable/lets_go_gambling/proc/update_strip_display(mob/living/carbon/xenomorph/gamba)
+	if(!gamba.client)
+		return
+
+	for(var/i = 1 to strip_size)
+		var/scroll_index = ((strip_pos + i - 2) % scroll_strip.len) + 1
+		var/obj/effect/detector_blip/slot = slot_objects[i]
+		if(!slot)
+			continue
+		slot.icon_state = scroll_strip[scroll_index]
+		slot.color = null
+		slot.transform = null
+
+/datum/action/xeno_action/activable/lets_go_gambling/proc/spin_step(mob/living/carbon/xenomorph/gamba)
+	if(QDELETED(src) || QDELETED(gamba))
+		return
+
+	strip_pos++
+	update_strip_display(gamba)
+
+	playsound(get_turf(gamba), 'sound/items/detector_ping_1.ogg', 30, FALSE)
+
+	if(delay_index >= spin_delays.len)
+		finish_spin(gamba)
+		return
+
+	delay_index++
+	addtimer(CALLBACK(src, PROC_REF(spin_step), gamba), spin_delays[delay_index] DECISECONDS, TIMER_STOPPABLE)
+
+/datum/action/xeno_action/activable/lets_go_gambling/proc/finish_spin(mob/living/carbon/xenomorph/gamba)
+	if(QDELETED(gamba))
+		return
+
+	var/obj/effect/detector_blip/center = slot_objects[center_slot]
+	if(center)
+		switch(winner_tier)
+			if("real_jackpot")
+				center.color = "#FF00FF"
+			if("jackpot")
+				center.color = "#FFD700"
+			if("high_end")
+				center.color = "#00BFFF"
+			else
+				center.color = "#FFFFFF"
+
+	// Play win sound based on tier
+	switch(winner_tier)
+		if("real_jackpot")
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), gamba, 'sound/voice/play_on_actual_win.ogg', 50, FALSE), 1.25 SECONDS)
+		if("jackpot")
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), gamba, 'sound/voice/play_on_rare.ogg', 50, FALSE), 1.25 SECONDS)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), gamba, 'sound/voice/play_on_jackpot.ogg', 50, FALSE), 1.25 SECONDS)
+		if("high_end")
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), gamba, 'sound/voice/play_on_rare.ogg', 50, FALSE), 1.25 SECONDS)
+		else
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), gamba, 'sound/voice/play_on_fail.ogg', 50, FALSE), 1.25 SECONDS)
+
+	to_chat(gamba, SPAN_XENODANGER("You rolled: [initial(winner_ability:name)]!"))
+
+	var/datum/action/action_given = give_action(gamba, winner_ability)
+	RegisterSignal(action_given, COMSIG_XENO_ACTION_USED, PROC_REF(on_ability_used))
+	addtimer(CALLBACK(src, PROC_REF(on_ability_expired), action_given), 10 SECONDS, TIMER_STOPPABLE)
+
+	addtimer(CALLBACK(src, PROC_REF(clear_strip_slots), gamba), 2 SECONDS, TIMER_STOPPABLE)
+
+/datum/action/xeno_action/activable/lets_go_gambling/proc/on_ability_used(datum/action/source)
 	SIGNAL_HANDLER
-	source.hide_from(owner)
 	UnregisterSignal(source, COMSIG_XENO_ACTION_USED)
+	INVOKE_ASYNC(src, PROC_REF(remove_granted_ability), source)
 
+/datum/action/xeno_action/activable/lets_go_gambling/proc/on_ability_expired(datum/action/source)
+	if(QDELETED(source))
+		return
+	UnregisterSignal(source, COMSIG_XENO_ACTION_USED)
+	remove_granted_ability(source)
 
-// These are just buffer abilities, some silly stuff
+/datum/action/xeno_action/activable/lets_go_gambling/proc/remove_granted_ability(datum/action/source)
+	if(QDELETED(source))
+		return
+	if(source.owner)
+		source.hide_from(source.owner)
+
+// ------------------------------------------------
+// FLUFF ABILITIES
+// ------------------------------------------------
+
 /datum/action/xeno_action/activable/fluff_ability_1
-
-	name = "Mystery Ability" // These are named vaguely because if i named them it would tell them what they do, we dont want that.
+	name = "Mystery Ability"
 	action_icon_state = "gardener_plant"
-	plasma_cost = 0 // it costs NOTHING
+	plasma_cost = 0
 	macro_path = ""
 	action_type = XENO_ACTION_CLICK
 	ability_primacy = XENO_PRIMARY_ACTION_2
@@ -290,13 +429,13 @@
 	new /mob/living/simple_animal/hostile/carp(target)
 
 	apply_cooldown()
-	..()
+	return ..()
 
 
-/datum/action/xeno_action/activable/fluff_ability_2 // Same ability, but for cats!!! now THIS is the real jacpot.
-	name = "Mystery Ability" // These are named vaguely because if i named them it would tell them what they do, we dont want that.
+/datum/action/xeno_action/activable/fluff_ability_2
+	name = "Mystery Ability"
 	action_icon_state = "gardener_plant"
-	plasma_cost = 0 // it costs NOTHING
+	plasma_cost = 0
 	macro_path = ""
 	action_type = XENO_ACTION_CLICK
 	ability_primacy = XENO_PRIMARY_ACTION_2
@@ -316,7 +455,7 @@
 	new /mob/living/simple_animal/cat(target)
 
 	apply_cooldown()
-	..()
+	return ..()
 
 /datum/action/xeno_action/activable/fluff_ability_3
 	name = "Mystery Ability"
@@ -327,7 +466,7 @@
 	ability_primacy = XENO_PRIMARY_ACTION_2
 	xeno_cooldown = 15 SECONDS
 
-/datum/action/xeno_action/activable/fluff_ability_3/use_ability(atom/target) // I think this is going to get me banned
+/datum/action/xeno_action/activable/fluff_ability_3/use_ability(atom/target)
 	var/mob/living/carbon/xenomorph/gamba_drone = owner
 
 	if(!gamba_drone.check_state())
@@ -335,16 +474,16 @@
 
 	var/datum/cause_data/cause_data = create_cause_data("trolled", gamba_drone)
 
-	cell_explosion(gamba_drone, 200, 100, EXPLOSION_FALLOFF_SHAPE_LINEAR, null, cause_data) // just a rocket like deal, doesnt kill anyone else.
+	cell_explosion(gamba_drone, 200, 100, EXPLOSION_FALLOFF_SHAPE_LINEAR, null, cause_data)
 
 	apply_cooldown()
 	..()
 
 
-/datum/action/xeno_action/activable/fluff_ability_4 //
-	name = "Mystery Ability" // These are named vaguely because if i named them it would tell them what they do, we dont want that.
+/datum/action/xeno_action/activable/fluff_ability_4
+	name = "Mystery Ability"
 	action_icon_state = "gardener_plant"
-	plasma_cost = 0 // it costs NOTHING
+	plasma_cost = 0
 	macro_path = ""
 	action_type = XENO_ACTION_CLICK
 	ability_primacy = XENO_PRIMARY_ACTION_2
@@ -364,7 +503,7 @@
 	new /mob/living/simple_animal/hostile/retaliate/giant_lizard(target)
 
 	apply_cooldown()
-	..()
+	return ..()
 
 
 /datum/action/xeno_action/activable/fluff_ability_5
@@ -372,7 +511,6 @@
 	action_icon_state = "gardener_plant"
 	plasma_cost = 0
 	action_type = XENO_ACTION_CLICK
-
 
 	var/datum/hive_status/hive
 	var/list/transported_xenos
