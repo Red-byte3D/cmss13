@@ -1468,3 +1468,32 @@
 
 	// We've done our duty, now die pls
 	qdel(src)
+
+
+
+/obj/effect/alien/resin/xeno_objective
+
+	name = "alien mass"
+	desc = "a large disgusting throbbing mass of acid and resin, it disgusts you."
+	icon = 'icons/obj/structures/alien/structures96x96.dmi'
+	icon_state = "objective_captured"
+	var/hive_number = XENO_HIVE_NORMAL
+	health = 10000
+	pixel_x = -4
+	pixel_y = -8
+	density = TRUE
+	plane = FLOOR_PLANE
+	can_block_movement = TRUE
+	bound_height = 64
+	bound_width = 96
+
+/obj/effect/alien/resin/xeno_objective/Initialize(mapload, hivenumber)
+	. = ..()
+	var/area/objective_area = get_area(src)
+
+	if(hivenumber)
+		hive_number = hivenumber
+
+	xeno_announcement(SPAN_XENOANNOUNCE("We have an objective at [objective_area] CAPTURE IT NOW."), hive_number, XENO_GENERAL_ANNOUNCE)
+
+
