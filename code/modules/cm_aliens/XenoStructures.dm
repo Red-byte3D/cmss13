@@ -1469,8 +1469,6 @@
 	// We've done our duty, now die pls
 	qdel(src)
 
-
-
 /obj/effect/alien/resin/xeno_objective
 
 	name = "alien mass"
@@ -1494,6 +1492,6 @@
 	if(hivenumber)
 		hive_number = hivenumber
 
-	xeno_announcement(SPAN_XENOANNOUNCE("We have an objective at [objective_area] CAPTURE IT NOW."), hive_number, XENO_GENERAL_ANNOUNCE)
+	marine_announcement("ALERT.\n\nEXTREME ENERGY INFLUX DETECTED IN [objective_area].\n\nCAUTION IS ADVISED.", "[MAIN_AI_SYSTEM] Biological Scanner", 'sound/misc/notice1.ogg')
 
 

@@ -14145,6 +14145,10 @@
 "iXj" = (
 /turf/closed/wall,
 /area/lv624/ground/barrens/east_barrens/ceiling)
+"iXs" = (
+/obj/effect/landmark/xeno_objective_spawn,
+/turf/open/gm/dirt,
+/area/lv624/ground/barrens/west_barrens)
 "iXz" = (
 /turf/open/gm/coast/beachcorner/south_west,
 /area/lv624/ground/barrens/west_barrens)
@@ -38044,7 +38048,7 @@ xwr
 xwr
 xwr
 xwr
-xwr
+iXs
 xwr
 xwr
 xwr
