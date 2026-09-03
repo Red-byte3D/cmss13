@@ -168,6 +168,10 @@
 	/// List of references to hive pylons active in the game world
 	var/list/active_endgame_pylons
 
+
+	// This just checks if the objective has been captured, used for granting buffs and abilities.
+	var/tunnel_used = FALSE
+	var/objective_captured = FALSE
 	/*Stores the image()'s for the xeno evolution radial menu
 	To add an image for your caste - add an icon to icons/mob/xenos/radial_xenos.dmi
 	Icon size should be 32x32, to make them fit within the radial menu border size your icon 22x22 and leave 10px transparent border.
