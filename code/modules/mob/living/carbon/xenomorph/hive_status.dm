@@ -1864,3 +1864,22 @@
 	desc = "Attack the enemy here!"
 	icon_state = "attack"
 
+/datum/hive_status/proc/enable_objective_reward()
+	if(objective_captured)
+		return
+	objective_captured = TRUE
+
+	for(var/mob/living/carbon/xenomorph/hive_xeno as anything in totalXenos)
+		apply_reward(hive_xeno)
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_XENO_SPAWN, PROC_REF(on_xeno_spawned))
+
+/datum/hive_status/proc/on_xeno_spawned(datum/source, mob/living/carbon/xenomorph/new_xeno)
+	SIGNAL_HANDLER
+	if(new_xeno.hive != src)
+		return
+	apply_reward(new_xeno)
+
+/datum/hive_status/proc/apply_reward(mob/living/carbon/xenomorph/xeno)
+	xeno.damage_modifier += XENO_DAMAGE_MOD_SMALL
+	xeno.recalculate_damage()

@@ -1501,9 +1501,6 @@
 	START_PROCESSING(SSobj, src)
 
 
-
-
-
 /obj/effect/alien/resin/xeno_objective/Destroy()
 	STOP_PROCESSING(SSobj, src)
 
@@ -1539,6 +1536,9 @@
 
 
 /obj/effect/alien/resin/xeno_objective/proc/captured()
-	var/area/objective_area = get_area(src)
+	var/datum/hive_status/hive = GLOB.hive_datum[hive_number]
+	if(hive)
+		hive.enable_objective_reward()
 
 	xeno_announcement(SPAN_XENOANNOUNCE("We have claimed our objective. For the hive."), hive_number, XENO_GENERAL_ANNOUNCE)
+	qdel(src)

@@ -801,6 +801,8 @@
 	)
 
 	for(var/path in immobile_abilities)
+		if(hive?.objective_captured)
+			give_action(src, /datum/action/xeno_action/activable/bombard/queen)
 		if(!hive.tunnel_used)
 			give_action(src, /datum/action/xeno_action/activable/build_tunnel/queen)
 		give_action(src, path)
