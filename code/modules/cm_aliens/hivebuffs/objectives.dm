@@ -190,9 +190,6 @@
 	if(!check_plasma_owner())
 		return FALSE
 
-	if(target_turf.z != bombarding_xeno.z)
-		to_chat(bombarding_xeno, SPAN_WARNING("That target is too far away!"))
-		return FALSE
 
 	var/atom/bombard_source = get_bombard_source()
 	if(!bombarding_xeno.can_bombard_turf(target_turf, range, bombard_source))
@@ -313,9 +310,10 @@
 	interrupt_flags = INTERRUPT_ALL
 
 /datum/action/xeno_action/activable/bombard/queen/get_bombard_source()
-	var/mob/living/carbon/xenomorph/queen/queen = owner
-	var/mob/hologram/queen/eye = locate() in queen.contents
-	return eye || owner
+	for(var/mob/hologram/queen/eye in GLOB.hologram_list)
+		if(eye.linked_mob == owner)
+			return eye
+	return owner
 
 /datum/action/xeno_action/activable/bombard/queen/use_ability(atom/target_atom)
 	var/mob/living/carbon/xenomorph/queen/queen = owner
