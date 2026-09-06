@@ -1,238 +1,247 @@
+// Unit tests for the Plant Weeds xeno ability.
 
-// Weed unit tests covering burrowed cooldowns check states the
+// Shared setup for the weed tests. Subtypes get a drone, its plant weeds
+// action and the turf it is standing on.
+/datum/unit_test/weed_test
+	var/mob/living/carbon/xenomorph/drone/xeno_weeder
+	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability
+	var/turf/weeder_turf
 
-/datum/unit_test/plant_weeds_creates_node/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive plant weeds action")
+/datum/unit_test/weed_test/Run()
+	return
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node already exists here")
+/datum/unit_test/weed_test/proc/prepare_weed_unit_test()
+	xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
+	weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
+	weeder_turf = get_turf(xeno_weeder)
+	xeno_weeder.plasma_stored = weeds_ability?.plasma_cost
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
+/datum/unit_test/weed_test/plant_weeds_creates_node/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
+
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NOTNULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "no weed node was planted")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, 0, "plasma were not removed deducted")
+	TEST_ASSERT_NOTNULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] failed to plant a weed node on its turf")
 
-/datum/unit_test/plant_weeds_sends_signal
+/datum/unit_test/weed_test/plant_weeds_uses_plasma/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
+
+	var/plasma_before = xeno_weeder.plasma_stored
+	weeds_ability.use_ability()
+
+	TEST_ASSERT_EQUAL(plasma_before - xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "Test xenomorph [xeno_weeder] did not have its plasma properly deducted after planting weeds")
+
+/datum/unit_test/weed_test/plant_weeds_sends_signal
 	var/signal_received = FALSE
 
-/datum/unit_test/plant_weeds_sends_signal/proc/on_node_planted(datum/source)
+/datum/unit_test/weed_test/plant_weeds_sends_signal/proc/on_node_planted(datum/source)
 	SIGNAL_HANDLER
 	signal_received = TRUE
 
-/datum/unit_test/plant_weeds_sends_signal/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_sends_signal/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
 	RegisterSignal(xeno_weeder, COMSIG_XENO_PLANT_RESIN_NODE, PROC_REF(on_node_planted))
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT(signal_received, "COMSIG_XENO_PLANT_RESIN_NODE was not sent on plant")
+	TEST_ASSERT(signal_received, "Test xenomorph [xeno_weeder] did not properly receive COMSIG_XENO_PLANT_RESIN_NODE signal after planting weeds")
 
-/datum/unit_test/plant_weeds_blocked_off_turf/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_off_turf/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/obj/item/storage/backpack/holder = allocate(/obj/item/storage/backpack)
 	xeno_weeder.forceMove(holder)
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted while the xeno was not on a turf")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent while the xeno was not on a turf")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] placed a weed node on a turf while inside of a container")
 
-/datum/unit_test/plant_weeds_blocked_by_dense_turf/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_dense_turf/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/original_density = weeder_turf.density
 	weeder_turf.density = TRUE
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
 	weeder_turf.density = original_density
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted on a dense turf")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent on a dense turf")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node on a dense turf")
 
-/datum/unit_test/plant_weeds_blocked_by_unweedable_turf/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_unweedable_turf/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/original_weedable = weeder_turf.is_weedable
 	weeder_turf.is_weedable = NOT_WEEDABLE
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
 	weeder_turf.is_weedable = original_weedable
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted on an unweedable turf")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent on an unweedable turf")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node on an unweedable turf")
 
-/datum/unit_test/plant_weeds_blocked_by_semiweedable_turf/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
-	TEST_ASSERT(!weeds_ability.plant_on_semiweedable, "this test assumes the drone cannot plant on semiweedable turfs")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_semiweedable_turf/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
+	TEST_ASSERT(!weeds_ability.plant_on_semiweedable, "Test failed during initialization: spawned [xeno_weeder] expected to not be able to weed semiweedable turfs, but was initialized with the ability to do so")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/original_weedable = weeder_turf.is_weedable
 	weeder_turf.is_weedable = SEMI_WEEDABLE
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
 	weeder_turf.is_weedable = original_weedable
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted on a semiweedable turf")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node on a semiweedable turf")
 
-/datum/unit_test/plant_weeds_blocked_by_stronger_node/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_stronger_node/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/obj/effect/alien/weeds/node/existing_node = allocate(/obj/effect/alien/weeds/node, weeder_turf)
 	existing_node.weed_strength = xeno_weeder.weed_level + 1
 	existing_node.hivenumber = xeno_weeder.hivenumber
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NOTNULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "the stronger tier weeds were uprooted")
-	TEST_ASSERT(!QDELETED(existing_node), "the stronger node was uprooted")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent against stronger weeds node")
+	TEST_ASSERT(!QDELETED(existing_node), "Test xenomorph [xeno_weeder] uprooted a weed node stronger than its own weed level")
 
-	qdel(existing_node)
+/// A xeno should never be able to uproot a node belonging to a hive that is not its own.
+/datum/unit_test/weed_test/plant_weeds_blocked_by_enemy_node/Run()
+	for(var/foreign_hivenumber in GLOB.hive_datum)
+		prepare_weed_unit_test()
+		TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-/datum/unit_test/plant_weeds_blocked_by_enemy_node/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+		if(foreign_hivenumber == xeno_weeder.hivenumber)
+			continue
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
-	var/obj/effect/alien/weeds/node/enemy_node = allocate(/obj/effect/alien/weeds/node, weeder_turf)
-	enemy_node.weed_strength = WEED_LEVEL_WEAK
-	enemy_node.hivenumber = XENO_HIVE_CORRUPTED
+		var/obj/effect/alien/weeds/node/enemy_node = allocate(/obj/effect/alien/weeds/node, weeder_turf)
+		enemy_node.weed_strength = WEED_LEVEL_WEAK
+		enemy_node.hivenumber = foreign_hivenumber
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
-	weeds_ability.use_ability()
+		weeds_ability.use_ability()
 
-	TEST_ASSERT(!QDELETED(enemy_node), "another hive's node was uprooted")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasmas was spent against another hives node")
+		TEST_ASSERT(!QDELETED(enemy_node), "Test xenomorph [xeno_weeder] uprooted a weed node belonging to [foreign_hivenumber]")
 
-/datum/unit_test/plant_weeds_blocked_by_resin_trap/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+		qdel(enemy_node)
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
+/datum/unit_test/weed_test/plant_weeds_blocked_by_resin_trap/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
+
 	allocate(/obj/effect/alien/resin/trap, weeder_turf)
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted on top of a resin trap")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent on top of a resin trap")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node on top of a resin trap")
 
-/datum/unit_test/plant_weeds_blocked_by_hive_weeds/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_hive_weeds/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/obj/effect/alien/weeds/hive_weeds = allocate(/obj/effect/alien/weeds, weeder_turf)
 	hive_weeds.weed_strength = WEED_LEVEL_HIVE
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted on hive weeds")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent on hive weeds")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node on top of hive weeds")
 
-/datum/unit_test/plant_weeds_blocked_by_dense_structure/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_dense_structure/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	var/obj/structure/blocker = allocate(/obj/structure/girder, weeder_turf)
-	TEST_ASSERT(blocker.density, "this tests if a weed node was dropped on a dense structure")
+	TEST_ASSERT(blocker.density, "Test failed during initialization: [blocker] was expected to be dense, but was not")
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted under a dense structure")
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent under a dense structure")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node underneath a dense structure")
 
-/datum/unit_test/plant_weeds_while_rested/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_while_resting/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	xeno_weeder.set_body_position(LYING_DOWN)
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "a node was planted despite the weeder resting")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node while resting")
 
-/datum/unit_test/plant_weeds_blocked_while_burrowed/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_while_burrowed/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	ADD_TRAIT(xeno_weeder, TRAIT_ABILITY_BURROWED, TRAIT_SOURCE_UNIT_TESTS)
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "node was planted while burrowed")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node while burrowed")
 
-/datum/unit_test/plant_weeds_blocked_by_plasma/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_plasma/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = get_turf(xeno_weeder)
 	xeno_weeder.plasma_stored = weeds_ability.plasma_cost - 1
 
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "  node was planted without enough plasma")
+	TEST_ASSERT_NULL(locate(/obj/effect/alien/weeds/node) in weeder_turf, "Test xenomorph [xeno_weeder] planted a weed node without enough plasma")
 
-/datum/unit_test/plant_weeds_blocked_by_cooldown/Run()
-	var/mob/living/carbon/xenomorph/drone/xeno_weeder = allocate(/mob/living/carbon/xenomorph/drone)
-	var/datum/action/xeno_action/onclick/plant_weeds/weeds_ability = get_action(xeno_weeder, /datum/action/xeno_action/onclick/plant_weeds)
-	TEST_ASSERT_NOTNULL(weeds_ability, "drone did not receive the plant weeds action")
+/datum/unit_test/weed_test/plant_weeds_blocked_by_cooldown/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
 
-	var/turf/weeder_turf = run_loc_floor_top_right
+	weeder_turf = run_loc_floor_top_right
 	xeno_weeder.forceMove(weeder_turf)
 
-	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
 	weeds_ability.use_ability()
 
-	var/obj/effect/alien/weeds/node/first_node = locate(/obj/effect/alien/weeds/node) in weeder_turf
-	TEST_ASSERT_NOTNULL(first_node, "the first node was not planted during setup")
-
 	xeno_weeder.plasma_stored = weeds_ability.plasma_cost
+	var/plasma_before = xeno_weeder.plasma_stored
 	weeds_ability.use_ability()
 
-	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, weeds_ability.plasma_cost, "plasma was spent while the ability was on cooldown")
-	TEST_ASSERT(!QDELETED(first_node), "the original node was replaced while on cooldown")
+	TEST_ASSERT_EQUAL(xeno_weeder.plasma_stored, plasma_before, "Test xenomorph [xeno_weeder] spent plasma planting weeds while the ability was on cooldown")
+
+/datum/unit_test/weed_test/plant_weeds_blocked_by_allied_node/Run()
+	prepare_weed_unit_test()
+	TEST_ASSERT_NOTNULL(weeds_ability, "Test xenomorph [xeno_weeder] did not receive action datum to plant weeds")
+
+	var/datum/hive_status/weeder_hive = GLOB.hive_datum[xeno_weeder.hivenumber]
+	TEST_ASSERT_NOTNULL(weeder_hive, "Test failed during initialization: could not resolve the hive of [xeno_weeder]")
+
+	// As per lothers request im reseting the banned allies testing then reapplying the bans because toherweise this would be impossible to test
+	var/list/original_banned_allies = weeder_hive.banned_allies
+	weeder_hive.banned_allies = list()
+
+	for(var/allied_hivenumber in GLOB.hive_datum)
+		var/datum/hive_status/allied_hive = GLOB.hive_datum[allied_hivenumber]
+		if(allied_hivenumber == xeno_weeder.hivenumber)
+			continue
+
+		var/original_stance = weeder_hive.allies[allied_hive.name]
+		weeder_hive.change_stance(allied_hive.name, TRUE)
+
+		var/obj/effect/alien/weeds/node/allied_node = allocate(/obj/effect/alien/weeds/node, weeder_turf)
+		allied_node.weed_strength = WEED_LEVEL_WEAK
+		allied_node.hivenumber = allied_hivenumber
+
+		weeds_ability.use_ability()
+
+		var/node_survived = !QDELETED(allied_node)
+
+		weeder_hive.change_stance(allied_hive.name, original_stance)
+		qdel(allied_node)
+
+		if(!node_survived)
+			weeder_hive.banned_allies = original_banned_allies
+			TEST_FAIL("Test xenomorph [xeno_weeder] uprooted a weed node belonging to allied hive [allied_hivenumber]")
+			return
+
+	weeder_hive.banned_allies = original_banned_allies
